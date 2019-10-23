@@ -1,0 +1,2 @@
+# Virtual-CPU
+C program that simulates a simple CPU. The simulation is at a register level (i.e. will simulate register to register transfers). This program has a simple user interface that would allow it to be used to test machine level programs written for the CPU (read a binary file into memory, display memory, single step instructions, display registers, etc.) While single stepping the program should display the registers after the end of each instruction cycle.
