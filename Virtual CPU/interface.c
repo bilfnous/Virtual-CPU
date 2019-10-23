@@ -4,8 +4,11 @@
  * Created on OCT 23, 2019
  */
 
+#define _CRT_SECURE_NO_WARNINGS
+
 #include <stdio.h>
 #include <stdlib.h>
+#include <ctype.h>
 #include "vcpu.h"
 
 void help() {
@@ -21,4 +24,40 @@ void help() {
 	printf("?, h display list of commands\n\n\n");
 }
 
-void run() {}
+void run() {
+	char c;
+
+	while (1) {
+
+		printf("\n>>");
+		scanf("%c", &c);
+
+		switch (tolower(c)) {
+		case 'd':
+			break;
+		case 'g':
+			break;
+		case 'l':
+			break;
+		case 'm':
+			break;
+		case 'q':
+			exit(EXIT_SUCCESS);
+			break;
+		case 'r':
+			break;
+		case 't':
+			break;
+		case 'w':
+			break;
+		case 'z':
+			break;
+		case 'h':
+		case '?':
+			help();
+			break;
+		default:
+			printf("Invalid input, try again!!!\n");
+		}
+	}
+}
