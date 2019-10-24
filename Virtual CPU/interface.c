@@ -26,6 +26,7 @@ void help() {
 
 void run() {
 	char c;
+	char memory[MEMORY_SIZE];
 
 	while (1) {
 
@@ -38,6 +39,7 @@ void run() {
 		case 'g':
 			break;
 		case 'l':
+			LoadFile(&memory, MEMORY_SIZE);
 			break;
 		case 'm':
 			break;
@@ -49,6 +51,7 @@ void run() {
 		case 't':
 			break;
 		case 'w':
+			WriteFile(&memory);
 			break;
 		case 'z':
 			break;
