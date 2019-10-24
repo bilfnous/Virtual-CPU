@@ -89,3 +89,40 @@ void WriteFile(void* memory) {
 	fclose(fp);
 	printf("Bytes number that have been written: %d bytes (%x hex).\n", write, write);
 }
+
+/*
+*   The interface code will prompt the user for an offset and length to be dumped from the CPU memory.
+*   The data dumped will depend on what has been placed in memory by the load file function.
+*   Args: memptr(points to the start of a section of memory)
+*         offset (specifies the part to be displayed)
+*	  length (specifies the number of bytes to be displayed)
+*/
+void MemDump(void* memory, unsigned int offset, unsigned int length) {
+	int i = 0, x = 0, y = 0, z = 16;
+	int a = 0, hex = 0;
+
+	for (i = 0; i < length; i++) {
+		a = 0;
+		x++;
+		if (x == 0 || x == 16) {
+			for (a = 0; a < 16; a++) {
+				printf("%x  ", hex);
+				hex++;
+			}
+		}
+		if (x == 16) {
+			printf("\n");
+			x = 0;
+			z = 16;
+			for (y = 0; y < 16; y++) {
+				if (isprint(((unsigned char*)memory)[offset - z]))
+					printf("%c   ", ((unsigned char*)memory)[offset - z]);
+				else
+					printf(".   ");
+				z--;
+			}
+			printf("\n\n");
+		}
+		offset++;
+	}
+}

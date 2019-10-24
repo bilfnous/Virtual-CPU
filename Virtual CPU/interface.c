@@ -27,6 +27,7 @@ void help() {
 void run() {
 	char c;
 	char memory[MEMORY_SIZE];
+	unsigned int offset, length, address;
 
 	while (1) {
 
@@ -35,6 +36,11 @@ void run() {
 
 		switch (tolower(c)) {
 		case 'd':
+			printf("\nEnter offset in bytes for memory dumb: ");
+			scanf("%u", &offset);
+			printf("\nEnter memory length in bytes: ");
+			scanf("%u", &length);
+			MemDump(&memory, offset, length);
 			break;
 		case 'g':
 			break;
