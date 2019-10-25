@@ -1,0 +1,5 @@
+Write a memory dump function with the following interface 
+and use the MemDump function implement memory dump in your 
+Virtual CPU. The interface code will prompt the user for an
+offset and length to be dumped from the CPU memory. The data 
+dumped will depend on what has been placed in memory by the load file function.

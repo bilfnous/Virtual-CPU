@@ -12,7 +12,7 @@
 
 int main(int argc, char** argv) {
 
-	printf("\nVirtual CPU\n\n");
+	printf("\n*** Virtual CPU ***\n");
 	help();
 	run();
 

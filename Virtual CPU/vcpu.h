@@ -15,7 +15,9 @@
 // Functions Prototypes 
 void help();
 void run();
-int LoadFile(void* memory, unsigned int max);
+int LoadFile(char* memory, unsigned int max);
 void WriteFile(void* memory);
+void MemDump(void* memory, unsigned int offset, unsigned int length);
+int MemMod(void* memory, unsigned int address);
 
 #endif /* VCPU_H */

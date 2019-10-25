@@ -12,20 +12,21 @@
 #include "vcpu.h"
 
 void help() {
-	printf("\n\n\nd dump memory\n");
-	printf("g go – run the entire program\n");
-	printf("l load a file into memory\n");
-	printf("m memory modify\n");
-	printf("q quit\n");
-	printf("r display registers\n");
-	printf("t trace – execute one instruction\n");
-	printf("w write file\n");
-	printf("z reset all registers to zero\n");
-	printf("?, h display list of commands\n\n\n");
+	printf("\n* d - dump memory\n");
+	printf("* g - go - run the entire program\n");
+	printf("* l - load a file into memory\n");
+	printf("* m - memory modify\n");
+	printf("* q - quit\n");
+	printf("* r - display registers\n");
+	printf("* t - trace - execute one instruction\n");
+	printf("* w - write file\n");
+	printf("* z - reset all registers to zero\n");
+	printf("* ?, h - display list of commands\n");
 }
 
 void run() {
 	char c;
+	int loadFile = 0;
 	char memory[MEMORY_SIZE];
 	unsigned int offset, length, address;
 
@@ -45,7 +46,13 @@ void run() {
 		case 'g':
 			break;
 		case 'l':
-			LoadFile(&memory, MEMORY_SIZE);
+			loadFile = LoadFile(&memory, MEMORY_SIZE);
+			if (loadFile == -1) {
+				printf("\nFile could not be open or could not be found!\n");
+			}
+			else {
+				printf("Bytes number that have been read: %d bytes (%x hex).\n", loadFile, loadFile);
+			}
 			break;
 		case 'm':
 			break;
@@ -68,5 +75,8 @@ void run() {
 		default:
 			printf("Invalid input, try again!!!\n");
 		}
+		int c;
+		while ((c = getchar()) != '\n' && c != EOF) {}
+		fflush(stdin);
 	}
 }

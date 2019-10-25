@@ -19,18 +19,17 @@
  *   Returns number of bytes read in decimal.
  *   Returns -1 if file can't open
  */
-int LoadFile(void* memory, unsigned int max) {
+int LoadFile(char* memory, unsigned int max) {
 	FILE* fp;
 	char fileName[32];
 	int read = 0;
 	int size = 0;
 
-	printf("Enter a file name to be loaded: ");
+	printf("Enter a file name: ");
 	scanf("%s", &fileName);
 
 	fp = fopen(fileName, "r");
 	if (fp == NULL) {
-		printf("\nCan't open file!!\n");
 		return -1;
 	}
 
@@ -40,19 +39,26 @@ int LoadFile(void* memory, unsigned int max) {
 	fseek(fp, 0L, SEEK_SET);
 	if (size > max) {
 		printf("!Warning! - File has been truncated!\n");
+		read = fread(memory, 1, max, fp);
+	}
+	else {
+		/*read file's contents and place them into memory*/
+		read = fread(memory, 1, size, fp);
 	}
 
-	/*read file's contents and place them into memory*/
-	read = fread(memory, 1, max, fp);
 	if (read <= 0) {
 		printf("!Warning! - File is empty!\n");
 	}
 	else {
-		printf("%s\n", memory);
+		int i = 0;
+		while (i <= size) {
+			printf("%c", memory[i]);
+			i++;
+		}
+		printf("\n");
 	}
 
 	fclose(fp);
-	printf("Bytes number that have been read: %d bytes (%x hex).\n", read, read);
 	return read;
 }
 
@@ -95,7 +101,7 @@ void WriteFile(void* memory) {
 *   The data dumped will depend on what has been placed in memory by the load file function.
 *   Args: memptr(points to the start of a section of memory)
 *         offset (specifies the part to be displayed)
-*	  length (specifies the number of bytes to be displayed)
+*	      length (specifies the number of bytes to be displayed)
 */
 void MemDump(void* memory, unsigned int offset, unsigned int length) {
 	int i = 0, x = 0, y = 0, z = 16;
