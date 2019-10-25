@@ -25,8 +25,9 @@ int LoadFile(char* memory, unsigned int max) {
 	int read = 0;
 	int size = 0;
 
-	printf("Enter a file name: ");
+	printf("\nEnter a file name: ");
 	scanf("%s", &fileName);
+	printf("\n");
 
 	fp = fopen(fileName, "r");
 	if (fp == NULL) {
@@ -51,7 +52,7 @@ int LoadFile(char* memory, unsigned int max) {
 	}
 	else {
 		int i = 0;
-		while (i <= size) {
+		while (i < size) {
 			printf("%c", memory[i]);
 			i++;
 		}
@@ -97,8 +98,7 @@ void WriteFile(void* memory) {
 }
 
 /*
-*   The interface code will prompt the user for an offset and length to be dumped from the CPU memory.
-*   The data dumped will depend on what has been placed in memory by the load file function.
+*   This function dumps data depending on what has been placed in memory by the load file function.
 *   Args: memptr(points to the start of a section of memory)
 *         offset (specifies the part to be displayed)
 *	      length (specifies the number of bytes to be displayed)
@@ -107,17 +107,25 @@ void MemDump(void* memory, unsigned int offset, unsigned int length) {
 	int i = 0, x = 0, y = 0, z = 16;
 	int a = 0, hex = 0;
 
+	if (offset > MEMORY_SIZE || offset < 0) {
+		printf("\nInvalid offset, setting default offset to 0.");
+		offset = 0;
+	}
+
 	for (i = 0; i < length; i++) {
 		a = 0;
 		x++;
+		//print header in hex
 		if (x == 0 || x == 16) {
+			printf("%04x\t", offset);
 			for (a = 0; a < 16; a++) {
-				printf("%x  ", hex);
+				printf("%02x  ", hex);
 				hex++;
 			}
 		}
+		//print memory content
 		if (x == 16) {
-			printf("\n");
+			printf("\n\t");
 			x = 0;
 			z = 16;
 			for (y = 0; y < 16; y++) {

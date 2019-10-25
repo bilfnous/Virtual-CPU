@@ -48,10 +48,10 @@ void run() {
 		case 'l':
 			loadFile = LoadFile(&memory, MEMORY_SIZE);
 			if (loadFile == -1) {
-				printf("\nFile could not be open or could not be found!\n");
+				printf("\nFile could not open!\n");
 			}
 			else {
-				printf("Bytes number that have been read: %d bytes (%x hex).\n", loadFile, loadFile);
+				printf("\nBytes number that have been read: %d bytes (%x hex).\n", loadFile, loadFile);
 			}
 			break;
 		case 'm':
@@ -73,7 +73,7 @@ void run() {
 			help();
 			break;
 		default:
-			printf("Invalid input, try again!!!\n");
+			printf("\nInvalid input, try again!!!\n");
 		}
 		int c;
 		while ((c = getchar()) != '\n' && c != EOF) {}
