@@ -55,6 +55,9 @@ void run() {
 			}
 			break;
 		case 'm':
+			printf("Enter the offset in memory (decimal):  ");
+			scanf("%d", &offset);
+			MemMod(&memory, offset);
 			break;
 		case 'q':
 			exit(EXIT_SUCCESS);

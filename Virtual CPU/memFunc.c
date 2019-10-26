@@ -140,3 +140,44 @@ void MemDump(void* memory, unsigned int offset, unsigned int length) {
 		offset++;
 	}
 }
+
+
+void MemMod(void* memory, int offset) {
+	//ensure offset is set within boundaries
+	if (offset > MEMORY_SIZE || offset < 0) {
+		printf("Invalid offset, setting to default offset 0.");
+		offset = 0;
+	}
+
+	char mminput[sizeof(int)];
+	unsigned int value;
+	while (1) {
+
+		//Displays info about current location
+		printf("Current address:\t0x%04X\n", offset);
+		printf("Value in memory:\t(%02X)\n", ((unsigned char*)memory)[offset]);
+		printf("Enter a 2 digit hex number or . to exit:  ");
+		fgets(mminput, sizeof(int), stdin);
+
+		//checks if input is a . to leave 
+		if (strcmp(mminput, ".\n") == 0) {
+			printf("Exiting modify\n");
+			break;
+		}
+
+		//checks if values entered is valid
+		//always prints out the first time, unsure why
+		else if (!isxdigit(mminput[0]) || !isxdigit(mminput[1])) {
+			printf("Enter a valid 2 digit hex number.\n\n");
+			continue;
+		}
+
+		//if the new value is valid, place it in memory and move to next location
+		else {
+			sscanf(mminput, "%X", &value);
+			printf("New value is: %02X\n\n", value);
+			((char*)memory)[offset] = value;
+			offset++;
+		}
+	}
+}
