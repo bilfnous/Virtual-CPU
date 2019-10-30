@@ -142,7 +142,7 @@ void MemDump(void* memory, unsigned int offset, unsigned int length) {
 }
 
 
-void MemMod(void* memory, int offset) {
+void MemMod(void* memory, unsigned int offset) {
 	//ensure offset is set within boundaries
 	if (offset > MEMORY_SIZE || offset < 0) {
 		printf("Invalid offset, setting to default offset 0.");
