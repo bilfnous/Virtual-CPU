@@ -123,6 +123,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="execute.c" />
     <ClCompile Include="interface.c" />
     <ClCompile Include="memFunc.c" />
     <ClCompile Include="vcpu.c" />
