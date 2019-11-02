@@ -238,3 +238,33 @@ int dumpReg() {
 			printf("r%02d:%08X ", i, registers[i]);
 		}
 	}
+	/* Print flags */
+	printf("\t SZC:%d%d%d", f_signFlag, f_zeroFlag, f_carryFlag);
+
+	/* Print non-visible registers */
+	printf("\n   MAR:%08X   MBR:%08X   IR0:%04X   IR1:%04X   Stop:%0d   IR Flag:%01d\n", r_mem_addr_reg, r_mem_buff_reg, IR0, IR1, f_stopFlag, ir);
+
+	return 0;
+}
+
+/* Function to reset all the registers, flags and non-visible registers*/
+int reset() {
+	int i;
+	// Reset visible registers
+	for (i = 0; i < RF_SIZE; i++) {
+		registers[i] = 0;
+	}
+	// Reset flags
+	f_signFlag = 0;
+	f_zeroFlag = 0;
+	f_carryFlag = 0;
+	f_stopFlag = 0;
+	ir = 0;
+	// Non-visible registers
+	r_mem_addr_reg = 0;
+	r_mem_buff_reg = 0;
+	ir = 0;
+	cir = 0;
+
+	return 0;
+}
