@@ -215,3 +215,26 @@ void instCycle(void* memory) {
 		execute(memory);
 	}
 }
+
+/* Function to display the registers, flags and non-visible registers*/
+int dumpReg() {
+	unsigned int i;
+
+	/* Print regsiter file */
+	for (i = 0; i < RF_SIZE; i++) {
+		if (i % LINE_BREAK == 0) {
+			printf("\n");
+		}
+		if (i == RF_SP) {
+			printf(" SP:%08X ", SP);
+		}
+		else if (i == RF_LR) {
+			printf(" LR:%08X ", LR);
+		}
+		else if (i == RF_PC) {
+			printf(" PC:%08X ", PC);
+		}
+		else {
+			printf("r%02d:%08X ", i, registers[i]);
+		}
+	}
