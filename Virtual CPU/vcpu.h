@@ -17,7 +17,7 @@
 
 #define LINE_BREAK  0x6
 
-//#define THUMB_SIZE  0x2//???
+#define THUMB_SIZE  0x2 // instruction size 
 //#define RF_SIZE   	0x10//??????? Register size = 16-bits
 //#define REG_SIZE  	0x4	// ??????to move to the next inst.
 

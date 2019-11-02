@@ -141,7 +141,137 @@ void execute(void* memory) {
 
 
 
+	* Function which determines the condition code suffixes for Cond. Branching*/
+int checkbran(){
+	// Equal is based on Zero flag = 1
+	if (EQ){
+		if (zeroFlag){
+			return 1;
+		}
+	}
+	// Not equal is based on Zero flag = 0
+	else if (NE){
+
+		if (zeroFlag == 0){
+			return 1;
+		}
+	}
+	// Higher or same based on carry = 1
+	else if (CS){
+
+		if (flag_carry){
+			return 1;
+		}
+	}
+	// Lower based on carry = 0
+	else if (CC){
+
+		if (!flag_carry){
+			return 1;
+		}
+	}
+	// Negative based on sign = 1
+	else if (MI){
+
+		if (signFlag){
+			return 1;
+		}
+	}
+	// Positive based on sign = 0
+	else if (PL){
+
+		if (!signFlag){
+			return 1;
+		}
+	}
+	// Higher based on carry = 1 and zero = 0
+	else if (HI){
+
+		if (flag_carry && zeroFlag == 0){
+			return 1;
+		}
+	}
+	// Lower based on carry = 0 or zero = 1
+	else if (LS){
+
+		if (flag_carry == 0 || zeroFlag){
+			return 1;
+		}
+	}
+	// Alaways is the default when no suffix specified 
+	else if (AL){
+
+		return 1;
+	}
+
+	return 0;
+}
 
 
 
+
+// Function which determines the condition code suffixes for Cond.Branching
+int checkbran() {
+	// Equal is based on Zero flag = 1
+	if (EQ) {
+		if (f_zeroFlag) {
+			return 1;
+		}
+	}
+	// Not equal is based on Zero flag = 0
+	else if (NE) {
+
+		if (f_zeroFlag == 0) {
+			return 1;
+		}
+	}
+	// Higher or same based on carry = 1
+	else if (CS) {
+
+		if (f_carryFlag) {
+			return 1;
+		}
+	}
+	// Lower based on carry = 0
+	else if (CC) {
+
+		if (!f_carryFlag) {
+			return 1;
+		}
+	}
+	// Negative based on sign = 1
+	else if (MI) {
+
+		if (f_signFlag) {
+			return 1;
+		}
+	}
+	// Positive based on sign = 0
+	else if (PL) {
+
+		if (!f_signFlag) {
+			return 1;
+		}
+	}
+	// Higher based on carry = 1 and zero = 0
+	else if (HI) {
+
+		if (f_carryFlag && f_zeroFlag == 0) {
+			return 1;
+		}
+	}
+	// Lower based on carry = 0 or zero = 1
+	else if (LS) {
+
+		if (f_carryFlag == 0 ||f_zeroFlag) {
+			return 1;
+		}
+	}
+	// Alaways is the default when no suffix specified 
+	else if (AL) {
+
+		return 1;
+	}
+
+	return 0;
 }
