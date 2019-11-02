@@ -97,7 +97,7 @@ void execute(void* memory) {
 		}
 		// set PC to offset determined from the inst.
 		PC = OFFSET12;
-		flag_ir = 0;
+		ir = 0;
 	}
 	/* Cond. Branch inst.*/
 	else if (COND_BRANCH)
@@ -107,9 +107,9 @@ void execute(void* memory) {
 			// setting alu to the result of PC + FF
 			alu = PC + (int)COND_ADDR;
 			// if IR1 !=0 pc will be pc + alu - 3 + 1 
-			if (flag_ir != 0) {
+			if (ir != 0) {
 
-				flag_ir = 0;
+				ir = 0;
 				alu = alu + ~THUMB_SIZE + 1;
 			}
 			// set PC to result of alu
@@ -121,17 +121,17 @@ void execute(void* memory) {
 	{
 		/* ADD inst.*/
 		if (DATA_ADD) {
-			alu = regfile[RD] + regfile[RN];
+			alu = registers[RD] + registers[RN];
 			flags(alu);
-			flag_carry = iscarry(regfile[RD], ~regfile[RN], 0);
-			regfile[RD] = alu;
+			f_carryFlag = iscarry(registers[RD], ~registers[RN], 0);
+			registers[RD] = alu;
 		}
 		/* SUB inst.*/
 		else if (DATA_SUB) {
-			alu = regfile[RD] + ~regfile[RN] + 1;
+			alu = registers[RD] + ~registers[RN] + 1;
 			flags(alu);
-			flag_carry = iscarry(regfile[RD], ~regfile[RN], 1);
-			regfile[RD] = alu;
+			f_carryFlag = iscarry(registers[RD], ~registers[RN], 1);
+			registers[RD] = alu;
 		}
 	}
 
