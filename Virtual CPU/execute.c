@@ -275,3 +275,22 @@ int checkbran() {
 
 	return 0;
 }
+
+
+//Function that fetchs the inst.and executes it
+void instCycle(void* memory) {
+	/* Determine which IR to use via IR Active flag */
+	if (ir == 0) {
+		ir = 1;
+		/* Fetch new set of instructions */
+		fetch(memory);
+		/* Current instruction is now IR0 */
+		cir = IR0;
+		execute(memory);
+	}
+	else {
+		ir = 0;
+		cir = IR1;
+		execute(memory);
+	}
+}
