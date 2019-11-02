@@ -17,8 +17,8 @@
 
 #define LINE_BREAK  0x6
 
-#define THUMB_SIZE  0x2 // instruction size 
-//#define RF_SIZE   	0x10//??????? Register size = 16-bits
+#define THUMB_SIZE  0x2 // instruction size (16 bit)
+#define RF_SIZE   	0x10//??????? Register size = 16-bits
 //#define REG_SIZE  	0x4	// ??????to move to the next inst.
 
 // Flags
@@ -31,9 +31,9 @@ int f_carryFlag;
 #define RF_SP   0xD
 #define RF_LR   0xE
 #define RF_PC   0xF
-#define SP      regfile[RF_SP]		// Stack Pointer 
-#define LR      regfile[RF_LR]		// Link Register
-#define PC      regfile[RF_PC]		// Program Counter
+#define SP      registers[RF_SP]		// Stack Pointer 
+#define LR      registers[RF_LR]		// Link Register
+#define PC      registers[RF_PC]		// Program Counter
 
 // Instruction Registers 
 #define IR0 (unsigned)ir >> 16 		// set ir0 to the lower 16 bits of the 32-bit inst.
