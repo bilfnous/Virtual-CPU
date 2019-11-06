@@ -21,28 +21,6 @@ int iscarry(unsigned long op1, unsigned long op2, unsigned C) {
 	return((op1 > (MAX32 - op2 - C)) ? 1 : 0);
 }
 
-/* Function that help implement the load instruction*/
-int loadReg(int mem_addr_reg, void* memory)
-{
-	int i;
-	r_mem_addr_reg = mem_addr_reg;
-
-	for (i = 0; i < CYCLES; i++, r_mem_addr_reg++)
-	{
-		r_mem_buff_reg = r_mem_buff_reg << SHIFT_BYTE;
-		r_mem_buff_reg += *((unsigned char*)memory + r_mem_addr_reg);
-	}
-
-	return r_mem_buff_reg;
-}
-
-/* Function fetchs the inst from memory*/
-void fetch(void* memory) {
-
-	ir = loadReg(PC, memory);
-	/* PC + 1 instruction */
-	PC += REG_SIZE;
-}
 
 void execute(void* memory) {
 	int i;
@@ -198,9 +176,32 @@ int checkbran() {
 	return 0;
 }
 
+/* Function that help implement the load instruction*/
+int loadReg(int mem_addr_reg, void* memory)
+{
+	int i;
+	r_mem_addr_reg = mem_addr_reg;
 
-//Function that fetchs the inst.and executes it
-void instCycle(void* memory) {
+	for (i = 0; i < CYCLES; i++, r_mem_addr_reg++)
+	{
+		r_mem_buff_reg = r_mem_buff_reg << SHIFT_BYTE;
+		r_mem_buff_reg += *((unsigned char*)memory + r_mem_addr_reg);
+	}
+
+	return r_mem_buff_reg;
+}
+
+/* Function fetchs the inst from memory*/
+void fetch(void* memory) {
+
+	ir = loadReg(PC, memory);
+	/* PC + 1 instruction */
+	PC += REG_SIZE;
+}
+
+
+// Function that fetchs instruction from memory and executes it
+void cycle(void* memory) {
 	/* Determine which IR to use via IR Active flag */
 	if (ir == 0) {
 		ir = 1;
@@ -217,42 +218,21 @@ void instCycle(void* memory) {
 	}
 }
 
-/* Function to display the registers, flags and non-visible registers*/
-int dumpReg() {
-	unsigned int i;
-
-	/* Print regsiter file */
-	for (i = 0; i < RF_SIZE; i++) {
-		if (i % LINE_BREAK == 0) {
-			printf("\n");
-		}
-		if (i == RF_SP) {
-			printf(" SP:%08X ", SP);
-		}
-		else if (i == RF_LR) {
-			printf(" LR:%08X ", LR);
-		}
-		else if (i == RF_PC) {
-			printf(" PC:%08X ", PC);
-		}
-		else {
-			printf("r%02d:%08X ", i, registers[i]);
-		}
-	}
-	/* Print flags */
-	printf("\t SZC:%d%d%d", f_signFlag, f_zeroFlag, f_carryFlag);
-
-	/* Print non-visible registers */
-	printf("\n   MAR:%08X   MBR:%08X   IR0:%04X   IR1:%04X   Stop:%0d   IR Flag:%01d\n", r_mem_addr_reg, r_mem_buff_reg, IR0, IR1, f_stopFlag, ir);
-
-	return 0;
+// Display all registers anf flags contents 
+void displayRegs() {
+	printf("R0: %x\tR1: %x\tR2: %x\tR3: %x\n", REG[0], REG[1], REG[2], REG[3]);
+	printf("R4: %x\tR5: %x\tR6: %x\tR7: %x\n", REG[4], REG[5], REG[6], REG[7]);
+	printf("R8: %x\tR9: %x\tR10: %x\tR11: %x\tR12: %x\n", REG[8], REG[9], REG[10], REG[11], REG[12]);
+	printf("R13(SP): %x\tR14(LR): %x\tR15(PC): %x\n", REG[13], REG[14], REG[15]);
+	printf("MBR: %x\tMAR: %x\tIR0: %x\tIR1: %x\n", MBR, MAR, IR0, IR1);
+	printf("S: %x\tZ: %x\tC: %x\tIR: %x\n", SIGN, ZERO, CARRY, IR);
 }
 
 // Resets all registers and flags
 int reset() {
 	int i;
 	for (i = 0; i < REG_NUM; i++) {
-		registers[i] = 0;
+		REG[i] = 0;
 	}
 	SIGN = false;
 	ZERO = false;
