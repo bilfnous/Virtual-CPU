@@ -24,16 +24,16 @@ bool CARRY;	// Carry Flag
 //#define IR_FLAG IR_FLAG //Flag to determine the active Instruction Regist
 
 // Registers
-int32_t MAR;	// Memory Address Register 
-int32_t MBR;	// Memory Buffer Register 
-int32_t IR;			//Instruction Register Combination of IR0 & IR1
-int16_t IR0, IR1;	// Instruction Register 0 and 1
-int32_t ALU;		// Arithmetic logic unit 
-int32_t registers[REG_NUM];	// Registers  Array
+int32_t MAR;			// Memory Address Register 
+int32_t MBR;			// Memory Buffer Register 
+int32_t IR;				//Instruction Register Combination of IR0 & IR1
+int16_t IR0, IR1;		// Instruction Register 0 and 1
+int32_t ALU;			// Arithmetic logic unit 
+int32_t REG[REG_NUM];	// Registers Array
 
-#define SP registers[13]; // Stack Pointer
-#define LR registers[14]; // Link Register
-#define PC registers[15]; // Program Counter
+#define SP REG[13]; // Stack Pointer
+#define LR REG[14]; // Link Register
+#define PC REG[15]; // Program Counter
 
 
 // Functions Prototypes 
