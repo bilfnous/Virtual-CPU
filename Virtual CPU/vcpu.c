@@ -14,6 +14,7 @@ int main(int argc, char** argv) {
 
 	printf("\n*** Virtual CPU ***\n");
 	help();
+	reset();
 	run();
 
 	return (EXIT_SUCCESS);

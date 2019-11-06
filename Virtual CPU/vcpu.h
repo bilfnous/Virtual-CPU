@@ -45,6 +45,7 @@ void MemDump(void* memory, unsigned int offset, unsigned int length);
 void MemMod(void* memory, unsigned int address);
 int iscarry(unsigned long op1, unsigned long op2, unsigned C);
 int loadReg(int mem_addr_reg, void* memory);
+int reset();
 void execute(void* memory);
 
 #endif /* VCPU_H */

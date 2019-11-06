@@ -7,6 +7,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <ctype.h>
+#include <stdbool.h>
 #include "vcpu.h"
 
 
@@ -247,24 +248,22 @@ int dumpReg() {
 	return 0;
 }
 
-/* Function to reset all the registers, flags and non-visible registers*/
+// Resets all registers and flags
 int reset() {
 	int i;
-	// Reset visible registers
-	for (i = 0; i < RF_SIZE; i++) {
+	for (i = 0; i < REG_NUM; i++) {
 		registers[i] = 0;
 	}
-	// Reset flags
-	f_signFlag = 0;
-	f_zeroFlag = 0;
-	f_carryFlag = 0;
-	f_stopFlag = 0;
-	ir = 0;
-	// Non-visible registers
-	r_mem_addr_reg = 0;
-	r_mem_buff_reg = 0;
-	ir = 0;
-	cir = 0;
+	SIGN = false;
+	ZERO = false;
+	CARRY = false;
+	STOP = false;
+	IR = 0;
+	IR0 = 0;
+	IR1 = 0;
+	MAR = 0;
+	MBR = 0;
+	ALU = 0;
 
 	return 0;
 }
