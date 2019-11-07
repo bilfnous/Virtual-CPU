@@ -262,6 +262,6 @@ int reset() {
 }
 
 void trace() {
-	fetch();
-	displayRegisters();
+	fetch(memory);
+	displayRegs();
 }

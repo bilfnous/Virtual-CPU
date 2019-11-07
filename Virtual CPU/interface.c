@@ -44,6 +44,7 @@ void run() {
 			MemDump(&memory, offset, length);
 			break;
 		case 'g':
+			//????????????????????
 			break;
 		case 'l':
 			loadFile = LoadFile(&memory, MEMORY_SIZE);
@@ -63,13 +64,16 @@ void run() {
 			exit(EXIT_SUCCESS);
 			break;
 		case 'r':
+			displayRegs();
 			break;
 		case 't':
+			trace();
 			break;
 		case 'w':
 			WriteFile(&memory);
 			break;
 		case 'z':
+			reset();
 			break;
 		case 'h':
 		case '?':
