@@ -25,7 +25,7 @@ int iscarry(unsigned long op1, unsigned long op2, unsigned C) {
 * Receives current instruciton and its type to be executed.
 * REGs will be changed depending on the command passed by "cycle()".
 */
-void execute(void* memory) {
+void execute() {
 	int i;
 
 	if (LOAD_STORE) {
@@ -210,7 +210,8 @@ void fetch(void* memory) {
 * Performs fetch instructions and executing them.
 * Receive command from fetch and passes it to execute.
 */
-void cycle() {
+// how to pass instruction and its type to execute??????????
+void cycle(void* memory) {
 	/* Determine which IR to use via IR Active flag */
 	if (ir == 0) {
 		ir = 1;
@@ -261,7 +262,7 @@ int reset() {
 	return 0;
 }
 
-void trace() {
+void trace(void* memory) {
 	fetch(memory);
 	displayRegs();
 }

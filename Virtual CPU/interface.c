@@ -44,7 +44,7 @@ void run() {
 			MemDump(&memory, offset, length);
 			break;
 		case 'g':
-			//????????????????????
+			cycle(&memory);
 			break;
 		case 'l':
 			loadFile = LoadFile(&memory, MEMORY_SIZE);
@@ -67,7 +67,7 @@ void run() {
 			displayRegs();
 			break;
 		case 't':
-			trace();
+			trace(&memory);
 			break;
 		case 'w':
 			WriteFile(&memory);

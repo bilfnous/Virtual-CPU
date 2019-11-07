@@ -45,10 +45,10 @@ void MemDump(void* memory, unsigned int offset, unsigned int length);
 void MemMod(void* memory, unsigned int address);
 int iscarry(unsigned long op1, unsigned long op2, unsigned C);
 int reset();
-void execute(void* memory);
-void cycle();
+void execute();
+void cycle(void* memory);
 void fetch(void* memory);
 void displayRegs();
-void trace();
+void trace(void* memory);
 
 #endif /* VCPU_H */
