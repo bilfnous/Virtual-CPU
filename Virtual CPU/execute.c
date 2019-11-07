@@ -21,7 +21,10 @@ int iscarry(unsigned long op1, unsigned long op2, unsigned C) {
 	return((op1 > (MAX32 - op2 - C)) ? 1 : 0);
 }
 
-
+/*
+* Receives current instruciton and its type to be executed.
+* REGs will be changed depending on the command passed by "cycle()".
+*/
 void execute(void* memory) {
 	int i;
 
@@ -176,9 +179,16 @@ int checkbran() {
 	return 0;
 }
 
-/* Function that help implement the load instruction*/
-int loadReg(int mem_addr_reg, void* memory)
-{
+
+/*
+* Reads the next command from memory and pushes it into IR and MBR registers.
+* Keeps running until stop flag is set or PC program counter reaches end of memory.
+*/
+void fetch(void* memory) {
+
+	ir = loadReg(PC, memory);
+	/* PC + 1 instruction */
+
 	int i;
 	r_mem_addr_reg = mem_addr_reg;
 
@@ -188,19 +198,19 @@ int loadReg(int mem_addr_reg, void* memory)
 		r_mem_buff_reg += *((unsigned char*)memory + r_mem_addr_reg);
 	}
 
-	return r_mem_buff_reg;
-}
+	// return r_mem_buff_reg;
 
-/* Function fetchs the inst from memory*/
-void fetch(void* memory) {
 
-	ir = loadReg(PC, memory);
-	/* PC + 1 instruction */
+
 	PC += REG_SIZE;
 }
 
 
-// Function that fetchs instruction from memory and executes it
+/* 
+* Performs fetch instructions and executing them.
+* Receive command from fetch and passes it to execute.
+*/
+//Function that fetchs instruction from memoryand executes it
 void cycle(void* memory) {
 	/* Determine which IR to use via IR Active flag */
 	if (ir == 0) {
@@ -218,7 +228,9 @@ void cycle(void* memory) {
 	}
 }
 
-// Display all registers anf flags contents 
+/*
+* Display all registers anf flags contents 
+*/
 void displayRegs() {
 	printf("R0: %x\tR1: %x\tR2: %x\tR3: %x\n", REG[0], REG[1], REG[2], REG[3]);
 	printf("R4: %x\tR5: %x\tR6: %x\tR7: %x\n", REG[4], REG[5], REG[6], REG[7]);
@@ -228,7 +240,9 @@ void displayRegs() {
 	printf("S: %x\tZ: %x\tC: %x\tIR: %x\n", SIGN, ZERO, CARRY, IR);
 }
 
-// Resets all registers and flags
+/*
+* Resets all registers and flags
+*/
 int reset() {
 	int i;
 	for (i = 0; i < REG_NUM; i++) {

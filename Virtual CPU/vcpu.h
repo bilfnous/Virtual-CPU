@@ -50,6 +50,4 @@ void cycle(void* memory);
 void fetch(void* memory);
 void displayRegs();
 
-int loadReg(int mem_addr_reg, void* memory);
-
 #endif /* VCPU_H */
