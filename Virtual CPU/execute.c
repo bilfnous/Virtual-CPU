@@ -210,8 +210,7 @@ void fetch(void* memory) {
 * Performs fetch instructions and executing them.
 * Receive command from fetch and passes it to execute.
 */
-//Function that fetchs instruction from memoryand executes it
-void cycle(void* memory) {
+void cycle() {
 	/* Determine which IR to use via IR Active flag */
 	if (ir == 0) {
 		ir = 1;
@@ -260,4 +259,9 @@ int reset() {
 	ALU = 0;
 
 	return 0;
+}
+
+void trace() {
+	fetch();
+	displayRegisters();
 }

@@ -46,8 +46,9 @@ void MemMod(void* memory, unsigned int address);
 int iscarry(unsigned long op1, unsigned long op2, unsigned C);
 int reset();
 void execute(void* memory);
-void cycle(void* memory);
+void cycle();
 void fetch(void* memory);
 void displayRegs();
+void trace();
 
 #endif /* VCPU_H */
