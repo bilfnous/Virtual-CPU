@@ -45,9 +45,9 @@ int32_t IR;						//Instruction Register Combination of IR0 & IR1
 int32_t MAR;					// Memory Address Register - the address in main memory that is currently being read or written
 int32_t MBR;					// Memory Buffer Register  - a two way register that holds data fetched from memory (and ready for the CPU to process) or data waiting to be stored in memory
 int32_t ALU;					// Arithmetic logic unit 
-int32_t CCR;					// Condition Code Register ???
+int32_t CCR;					// ??? Condition Code Register CCR Flags
+int32_t CIR;					// ??? Current Instruction Register - a temporary holding ground for the instruction that has just been fetched from memory
 int32_t REG[REG_NUM];			// Registers Array
-
 
 /*
 	The Stack Pointer (SP) is register R13. In Thread mode, 
