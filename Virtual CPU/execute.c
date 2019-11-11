@@ -46,6 +46,9 @@ void fetch(void* memory) {
 /*
 * Fetches instructions and executes them.
 * Receive command from fetch and passes it to execute.
+https://github.com/dkonieczek/Virtual-CPU/blob/master/vcpu.c
+https://github.com/JDHumphries/Socket-Server
+https://github.com/mynameisyoshi/ceng509
 */
 void cycle(void* memory) {
 
@@ -57,7 +60,24 @@ void cycle(void* memory) {
 * REGs will be changed depending on the command passed by "cycle()".
 */
 void execute() {
+	if (/*load and store*/) {
 	
+	}
+	else if (/*data process*/) {
+	
+	}
+	else if (/*conditional*/) {
+	
+	}
+	else if (/*UN conditional*/) {
+	
+	}
+	else if (/*stop*/) {
+	
+	}
+	else {
+		//default bad 
+	}
 }
 
 /*
