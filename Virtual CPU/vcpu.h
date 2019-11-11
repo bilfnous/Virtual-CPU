@@ -28,7 +28,7 @@
 // Constants (sizes)
 #define MEMORY_SIZE 0x4000		// memory(buffer) size
 #define MAX32		0xFFFFFFFF	// carryFlag overflow
-#define REG_NUM		16			// Number of registers
+#define REG_NUM		0x10		// Number of registers
 
 // CCR Flags
 bool SIGN;	// Sign Flag
@@ -40,7 +40,7 @@ bool CARRY;	// Carry Flag
 
 // Registers
 int32_t IR;						//Instruction Register Combination of IR0 & IR1
-#define IR0 IR >> 16;			// Instruction Register 0
+#define IR0 IR >> 0x10;			// Instruction Register 0
 #define IR1 IR & 0x000FFFF;		// Instruction Register 1
 int32_t MAR;					// Memory Address Register - the address in main memory that is currently being read or written
 int32_t MBR;					// Memory Buffer Register  - a two way register that holds data fetched from memory (and ready for the CPU to process) or data waiting to be stored in memory
@@ -58,13 +58,13 @@ int32_t REG[REG_NUM];			// Registers Array
 	On reset, the processor loads the MSP with the value 
 	from address 0x00000000.
 */
-#define SP REG[13]; // Stack Pointer
+#define SP REG[0xD]; // Stack Pointer
 /* 
 	LR REG stores the return information for subroutines, 
 	function calls, and exceptions.
 	Reset value is 0xFFFFFFFF. 
 */
-#define LR REG[14]; // Link Register
+#define LR REG[0xE]; // Link Register
 /*
 	The Program Counter (PC) is register R15. 
 	It contains the current program address. On reset, 
@@ -72,7 +72,7 @@ int32_t REG[REG_NUM];			// Registers Array
 	which is at address 0x00000004. Bit[0] of the value is loaded 
 	into the EPSR T-bit at reset and must be 1.
 */
-#define PC REG[15]; // Program Counter
+#define PC REG[0xF]; // Program Counter
 
 
 // Functions Prototypes 
