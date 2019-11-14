@@ -73,19 +73,19 @@ void cycle(void* memory) {
 * REGs will be changed depending on the command passed by "cycle()".
 */
 void execute() {
-	if (/*load and store*/) {
+	if (LOAD_STORE) {
 	
 	}
-	else if (/*data process*/) {
+	else if (DATA_PROC) {
 	
 	}
-	else if (/*conditional*/) {
+	else if (CON_BRANCH) {
 	
 	}
-	else if (/*UN conditional*/) {
+	else if (UN_BRANCH) {
 	
 	}
-	else if (/*stop*/) {
+	else if (STOP_I) {
 	
 	}
 	else {
@@ -116,7 +116,7 @@ int reset() {
 	SIGN = false;
 	ZERO = false;
 	CARRY = false;
-	STOP = false;
+	STOP_F = false;
 	IR = 0;
 	MAR = 0;
 	MBR = 0;
