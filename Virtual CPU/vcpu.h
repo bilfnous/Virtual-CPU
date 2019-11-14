@@ -23,9 +23,6 @@
 		In little-endian format, the processor stores the least 
 		significant byte of a word at the lowest-numbered byte, 
 		and the most significant byte at the highest-numbered byte.
-
-		Rd: Destination register
-		Rn: An operand in a register for an arithmetic operation.
 */
 
 // Constants (sizes)
@@ -34,23 +31,25 @@
 #define REG_NUM		0x10		// Number of registers
 
 // CCR Flags
-bool SIGN;	// Sign Flag
-bool ZERO;	// Zero Flag
-bool STOP;	// Stop Flag
-bool CARRY;	// Carry Flag
+bool SIGN;	  // Sign Flag
+bool ZERO;	  // Zero Flag
+bool STOP_F;  // Stop Flag
+bool CARRY;	  // Carry Flag
 
 //#define IR_FLAG IR_FLAG //Flag to determine the active Instruction Regist
 
 // Registers
 // CIR or IR Current Instruction Register - a temporary holding ground for the instruction that has just been fetched from memory
 int32_t IR;						// Instruction Register Combination of IR0 & IR1
-#define IR0 IR >> 0x10;			// Instruction Register 0
-#define IR1 IR & 0x000FFFF;		// Instruction Register 1
+int32_t IR0;					// Instruction Register 0
+int32_t IR1;					// Instruction Register 1
 int32_t MAR;					// Memory Address Register - the address in main memory that is currently being read or written
 int32_t MBR;					// Memory Buffer Register  - a two way register that holds data fetched from memory (and ready for the CPU to process) or data waiting to be stored in memory
 int32_t ALU;					// Arithmetic logic unit 
 int32_t CCR;					// ??? Condition Code Register CCR Flags
 int32_t REG[REG_NUM];			// Registers Array
+int32_t RD;						// RD: Destination register
+int32_t RN;						// RN : An operand in a register for an arithmetic operation.
 
 /*
 	The Stack Pointer (SP) is register R13. In Thread mode, 
@@ -83,7 +82,7 @@ int32_t REG[REG_NUM];			// Registers Array
 #define DATA_PROC	0x12 & IR0
 #define CON_BRANCH	0x13 & IR0
 #define UN_BRANCH	0x14 & IR0
-#define STOP		0x15 & IR0
+#define STOP_I		0x15 & IR0
 
 // Data processing instructions
 #define AND 0x0 // Logical bit-wise AND Rd := Rn AND Op2
