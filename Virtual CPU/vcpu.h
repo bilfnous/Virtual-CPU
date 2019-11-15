@@ -47,9 +47,9 @@ int32_t MAR;					// Memory Address Register - the address in main memory that is
 int32_t MBR;					// Memory Buffer Register  - a two way register that holds data fetched from memory (and ready for the CPU to process) or data waiting to be stored in memory
 int32_t ALU;					// Arithmetic logic unit 
 int32_t CCR;					// ??? Condition Code Register CCR Flags
-int32_t REG[REG_NUM];			// Registers Array
 int32_t RD;						// RD: Destination register
 int32_t RN;						// RN : An operand in a register for an arithmetic operation.
+int32_t REG[REG_NUM];			// Registers Array
 
 /*
 	The Stack Pointer (SP) is register R13. In Thread mode, 
@@ -60,13 +60,13 @@ int32_t RN;						// RN : An operand in a register for an arithmetic operation.
 	On reset, the processor loads the MSP with the value 
 	from address 0x00000000.
 */
-#define SP REG[0xD]; // Stack Pointer
+#define SP REG[0x0D] // Stack Pointer
 /* 
 	LR REG stores the return information for subroutines, 
 	function calls, and exceptions.
 	Reset value is 0xFFFFFFFF. 
 */
-#define LR REG[0xE]; // Link Register
+#define LR REG[0x0E] // Link Register
 /*
 	The Program Counter (PC) is register R15. 
 	It contains the current program address. On reset, 
@@ -74,7 +74,7 @@ int32_t RN;						// RN : An operand in a register for an arithmetic operation.
 	which is at address 0x00000004. Bit[0] of the value is loaded 
 	into the EPSR T-bit at reset and must be 1.
 */
-#define PC REG[0xF]; // Program Counter
+#define PC REG[0x0F] // Program Counter
 
 // Instructions
 /* Check if instruction fetched is equal to one of the predefined instructions. */
@@ -114,7 +114,7 @@ void WriteFile(void* memory);
 void MemDump(void* memory, unsigned int offset, unsigned int length);
 void MemMod(void* memory, unsigned int address);
 int iscarry(unsigned long op1, unsigned long op2, unsigned C);
-int reset();
+void reset();
 void execute();
 void cycle(void* memory);
 void fetch(void* memory);
