@@ -41,31 +41,34 @@ int iscarry(unsigned long op1, unsigned long op2, unsigned C) {
 */
 void fetch(void* memory) {
 	int32_t bytes, regSize = 32, i = 0;
-	
+
 	// bytes - how many bytes to be read from memory to obtain the full instruction
 	bytes = regSize / ((int)sizeof(char));
 
 	// move the address that is currently being read into MAR register
-	MAR = &memory + PC;
+	MAR = PC;
 
 	//Move memory contents at MAR into MBR
 	for (i = 0; i < bytes; i++) {
 		MBR = MBR << bytes; //???
-		MBR += *((unsigned char*)memory + (MBR + i));
+		MBR += *((unsigned char*)memory + (MAR + i));
 	}
 
-	//Move MBR into the Instruction Register
+	//Move MBR into the Instruction Registers
 	IR = MBR;
+	IR0 = IR >> 0x10;
+	IR1 = IR & 0x000FFFF;
 
+	PC += regSize;
 }
 
 /*
 * Fetches instructions and executes them.
-* Receive command from fetch and passes it to execute.
+* Commands are passed from fetch to execute using registers.
 */
 void cycle(void* memory) {
-
-
+	fetch(&memory);
+	execute();
 }
 
 /*
@@ -108,7 +111,7 @@ void displayRegs() {
 /*
 * Resets all registers and flags
 */
-int reset() {
+void reset() {
 	int i;
 	for (i = 0; i < REG_NUM; i++) {
 		REG[i] = 0;
@@ -122,7 +125,6 @@ int reset() {
 	MBR = 0;
 	ALU = 0;
 
-	return 0;
 }
 
 void trace(void* memory) {
