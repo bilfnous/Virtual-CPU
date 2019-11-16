@@ -56,10 +56,11 @@ void fetch(void* memory) {
 
 	//Move MBR into the Instruction Registers
 	IR = MBR;
-	IR0 = IR >> 0x10;
-	IR1 = IR & 0x000FFFF;
+	IR0 = IR >> 0x10;		// IR0 holds instruction
+	IR1 = IR & 0x000FFFF;	// IR1 holds operand
 
-	PC += regSize;
+	// Increment programming counter into next position
+	PC += regSize; 
 }
 
 /*
@@ -67,8 +68,10 @@ void fetch(void* memory) {
 * Commands are passed from fetch to execute using registers.
 */
 void cycle(void* memory) {
-	fetch(&memory);
-	execute();
+	while(STOP_F == false) {
+		fetch(&memory);
+		execute();
+	}
 }
 
 /*
@@ -77,7 +80,20 @@ void cycle(void* memory) {
 */
 void execute() {
 	if (LOAD_STORE) {
-	
+		if (LOAD) {
+			if (HALFWORD) {
+			}
+			else (WORD) {
+			}
+		
+		}
+		else if (STORE) {
+			if (HALFWORD) {
+			}
+			else (WORD) {
+			}
+		}
+
 	}
 	else if (DATA_PROC) {
 	
@@ -89,10 +105,11 @@ void execute() {
 	
 	}
 	else if (STOP_I) {
-	
+		printf("\n\n*** End Of Program ***\n\n");
+		STOP_F = true;
 	}
 	else {
-		//default bad 
+		printf("\n\nInstruction Does Not Exists!!!\n\n");
 	}
 }
 
@@ -124,10 +141,9 @@ void reset() {
 	MAR = 0;
 	MBR = 0;
 	ALU = 0;
-
 }
 
 void trace(void* memory) {
 	displayRegs();
-	fetch(memory);
+	fetch(&memory);
 }

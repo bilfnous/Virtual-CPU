@@ -41,8 +41,8 @@ bool CARRY;	  // Carry Flag
 // Registers
 // CIR or IR Current Instruction Register - a temporary holding ground for the instruction that has just been fetched from memory
 int32_t IR;						// Instruction Register Combination of IR0 & IR1
-int32_t IR0;					// Instruction Register 0
-int32_t IR1;					// Instruction Register 1
+int16_t IR0;					// Instruction Register 0
+int16_t IR1;					// Instruction Register 1
 int32_t MAR;					// Memory Address Register - the address in main memory that is currently being read or written
 int32_t MBR;					// Memory Buffer Register  - a two way register that holds data fetched from memory (and ready for the CPU to process) or data waiting to be stored in memory
 int32_t ALU;					// Arithmetic logic unit 
@@ -78,11 +78,16 @@ int32_t REG[REG_NUM];			// Registers Array
 
 // Instructions
 /* Check if instruction fetched is equal to one of the predefined instructions. */
-#define LOAD_STORE	0x11 & IR0
-#define DATA_PROC	0x12 & IR0
-#define CON_BRANCH	0x13 & IR0
-#define UN_BRANCH	0x14 & IR0
-#define STOP_I		0x15 & IR0
+#define LOAD_STORE	0x1 & IR0
+#define DATA_PROC	0x2 & IR0
+#define CON_BRANCH	0x3 & IR0
+#define UN_BRANCH	0x4 & IR0
+#define STOP_I		0x5 & IR0
+
+#define LOAD
+#define STORE
+#define HALFWORD
+#define WORD
 
 // Data processing instructions
 #define AND 0x0 // Logical bit-wise AND Rd := Rn AND Op2
