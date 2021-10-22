@@ -29,7 +29,7 @@ void run() {
 
 	while (1) {
 
-		printf("\n>>");
+		printf("\n>> ");
 		scanf("%c", &c);
 
 		switch (tolower(c)) {
@@ -46,14 +46,14 @@ void run() {
 		case 'l':
 			loadFile = LoadFile(&memory, MEMORY_SIZE);
 			if (loadFile == -1) {
-				printf("\nFile could not open!\n");
+				printf("\nFile could not be opened!\n");
 			}
 			else {
 				printf("\nBytes number that have been read: %d bytes (%x hex).\n", loadFile, loadFile);
 			}
 			break;
 		case 'm':
-			printf("Enter the offset in memory (decimal):  ");
+			printf("Enter the offset in memory (decimal): ");
 			scanf("%d", &offset);
 			MemMod(&memory, offset);
 			break;

@@ -83,14 +83,14 @@ void execute() {
 		if (LOAD) {
 			if (HALFWORD) {
 			}
-			else (WORD) {
+			else if (WORD) {
 			}
 		
 		}
 		else if (STORE) {
 			if (HALFWORD) {
 			}
-			else (WORD) {
+			else if (WORD) {
 			}
 		}
 
