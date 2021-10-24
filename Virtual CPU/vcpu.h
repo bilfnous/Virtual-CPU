@@ -116,7 +116,7 @@ void help();
 void run();
 int LoadFile(char* memory, unsigned int max);
 void WriteFile(void* memory);
-void MemDump(void* memory, unsigned int offset, unsigned int length);
+void MemDump(void* memory, unsigned offset, unsigned length);
 void MemMod(void* memory, unsigned int address);
 int iscarry(unsigned long op1, unsigned long op2, unsigned C);
 void reset();

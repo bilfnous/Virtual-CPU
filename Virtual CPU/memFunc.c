@@ -89,6 +89,7 @@ void WriteFile(void* memory) {
 			printf("\nError!!!...File size should be less than %dK Bytes!!\n", MEMORY_SIZE);
 	} while (byte > MEMORY_SIZE);
 
+	// program crashes here, there's a bug that needs to be fixed
 	write = fwrite(memory, 1, byte, fp);
 	fclose(fp);
 	printf("Bytes number that have been written: %d bytes (%x hex).\n", write, write);
@@ -100,41 +101,62 @@ void WriteFile(void* memory) {
 *         offset (specifies the part to be displayed)
 *	      length (specifies the number of bytes to be displayed)
 */
-void MemDump(void* memory, unsigned int offset, unsigned int length) {
-	int i = 0, x = 0, y = 0, z = 16;
-	int a = 0, hex = 0;
+void MemDump(void* memory, unsigned offset, unsigned length) {
+	int i = 0, j = 0;
+	unsigned offset_hex = offset;
+	unsigned offset_char = offset;
+	// The number of header lines, divides length by 16 (in hex 0x10) 
+	int header_num = length / 0x10;
+	//length of the last header
+	int last_header = length % 0x10;
 
-	if (offset > MEMORY_SIZE || offset < 0) {
+ 	if (offset > MEMORY_SIZE || offset < 0) {
 		printf("\nInvalid offset, setting default offset to 0.");
 		offset = 0;
 	}
 
-	for (i = 0; i < length; i++) {
-		a = 0;
-		x++;
-		//print header in hex
-		if (x == 0 || x == 16) {
+	if (header_num > 0) {
+		for (j = 0; j < header_num; j++) {
+			// Prints address
 			printf("%04x\t", offset);
-			for (a = 0; a < 16; a++) {
-				printf("%02x  ", hex);
-				hex++;
+
+			// Prints memory contents in hex
+			for (i = 0; i < 16; i++) {
+				printf("%02x   ", ((unsigned char*)memory)[offset_hex]);
+				offset_hex++;
 			}
-		}
-		//print memory content
-		if (x == 16) {
-			printf("\n\t");
-			x = 0;
-			z = 16;
-			for (y = 0; y < 16; y++) {
-				if (isprint(((unsigned char*)memory)[offset - z]))
-					printf("%c   ", ((unsigned char*)memory)[offset - z]);
+			printf("\n");
+			// Prints memory contents
+			printf("\t");
+			for (i = 0; i < 16; i++) {
+				if (isprint(((unsigned char*)memory)[offset_char]))
+					printf("%c    ", ((unsigned char*)memory)[offset_char]);
 				else
 					printf(".   ");
-				z--;
+				offset_char++;
 			}
+			offset += 0x10;
 			printf("\n\n");
 		}
-		offset++;
+		printf("\n\n");
+	}
+
+	if (last_header > 0) {
+		printf("%04x\t", offset);
+		for (i = 0; i < last_header; i++) {
+			printf("%02x   ", ((unsigned char*)memory)[offset_hex]);
+			offset_hex++;
+		}
+		printf("\n\n");
+		printf("\t");
+		for (i = 0; i < last_header; i++) {
+			if (isprint(((unsigned char*)memory)[offset_char]))
+				printf("%c    ", ((unsigned char*)memory)[offset_char]);
+			else
+				printf(".   ");
+			offset_char++;
+		}
+		printf("\n\n");
 	}
 }
 

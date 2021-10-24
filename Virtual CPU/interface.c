@@ -34,10 +34,10 @@ void run() {
 
 		switch (tolower(c)) {
 		case 'd':
-			printf("\nEnter offset in bytes for memory dumb: ");
-			scanf("%u", &offset);
-			printf("\nEnter memory length in bytes: ");
-			scanf("%u", &length);
+			printf("\nEnter offset in hex for memory dumb: ");
+			scanf("%x", &offset);
+			printf("\nEnter memory length in hex: ");
+			scanf("%x", &length);
 			MemDump(&memory, offset, length);
 			break;
 		case 'g':
