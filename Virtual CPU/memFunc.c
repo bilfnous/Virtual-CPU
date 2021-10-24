@@ -160,42 +160,47 @@ void MemDump(void* memory, unsigned offset, unsigned length) {
 	}
 }
 
-
-void MemMod(void* memory, unsigned int offset) {
+/*
+* memory modify code ask the user to enter the starting address. Display the address and
+* the existing value at that location and prompt the user for a new value. If the input is a period (.),
+* exit, if it is a hex value, change the value and increment the address, else increment the address.
+*/
+void MemMod(void* memory, unsigned offset) {
+	char value[3];
 	//ensure offset is set within boundaries
 	if (offset > MEMORY_SIZE || offset < 0) {
 		printf("Invalid offset, setting to default offset 0.");
 		offset = 0;
 	}
 
-	char mminput[sizeof(int)];
-	unsigned int value;
-	while (1) {
-
+	while (true) {
 		//Displays info about current location
 		printf("Current address:\t0x%04X\n", offset);
-		printf("Value in memory:\t(%02X)\n", ((unsigned char*)memory)[offset]);
-		printf("Enter a 2 digit hex number or . to exit:  ");
-		fgets(mminput, sizeof(int), stdin);
-
-		//checks if input is a . to leave 
-		if (strcmp(mminput, ".\n") == 0) {
+		printf("Value in memory in hex:\t(%02X)\n", ((unsigned char*)memory)[offset]);
+		printf("Memory content:\t(%c)\n", ((unsigned char*)memory)[offset]);
+		printf("Enter a 2 digit hex value to change this locaiton to, or . to exit:  ");
+		//scanf("%x", &value);
+		fgets(value, sizeof value, stdin);
+		fgets(value, sizeof value, stdin);
+		//checks if input is a . to exit
+		if (strcmp(value, ".\n") == 0) {
 			printf("Exiting modify\n");
 			break;
 		}
 
 		//checks if values entered is valid
 		//always prints out the first time, unsure why
-		else if (!isxdigit(mminput[0]) || !isxdigit(mminput[1])) {
+		else if (!isxdigit(value[0]) || !isxdigit(value[1])) {
 			printf("Enter a valid 2 digit hex number.\n\n");
 			continue;
 		}
 
 		//if the new value is valid, place it in memory and move to next location
 		else {
-			sscanf(mminput, "%X", &value);
-			printf("New value is: %02X\n\n", value);
-			((char*)memory)[offset] = value;
+			sscanf(value, "%x", &value);
+			printf("New value is: %c\n\n", value[0]);
+			*(((unsigned char*)memory)+ offset) = value[0]; // doesn't store cprect value ??
+			printf("Memory content:\t(%c)\n\n", ((unsigned char*)memory)[offset]);
 			offset++;
 		}
 	}
