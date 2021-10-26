@@ -29,7 +29,7 @@ void run() {
 
 	while (1) {
 
-		printf("\n>> ");
+		printf("\n Virtual CPU ('h' for help) > ");
 		scanf("%c", &c);
 
 		switch (tolower(c)) {

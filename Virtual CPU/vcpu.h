@@ -78,7 +78,7 @@ int32_t REG[REG_NUM];			// Registers Array
 
 // Instructions
 /* Check if instruction fetched is equal to one of the predefined instructions. */
-#define LOAD_STORE	0x1 & (IR >> 0x18) // Shift 3 bytes to the right
+#define LOAD_STORE	0x1 & (IR >> 0x18) // Shift 3 bytes to the right (check last eight bits against the instruciton)
 #define DATA_PROC	0x2 & (IR >> 0x18)
 #define CON_BRANCH	0x3 & (IR >> 0x18)
 #define UN_BRANCH	0x4 & (IR >> 0x18)
@@ -117,7 +117,7 @@ void run();
 int LoadFile(char* memory, unsigned int max);
 void WriteFile(void* memory);
 void MemDump(void* memory, unsigned offset, unsigned length);
-void MemMod(void* memory, unsigned int address);
+void MemMod(void* memory, unsigned address);
 int iscarry(unsigned long op1, unsigned long op2, unsigned C);
 void reset();
 void execute();

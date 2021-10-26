@@ -40,27 +40,22 @@ int iscarry(unsigned long op1, unsigned long op2, unsigned C) {
 * Keeps running until stop flag is set or PC program counter reaches end of memory.
 */
 void fetch(void* memory) {
-	int32_t bytes, regSize = 32, i = 0;
-
-	// bytes - how many bytes to be read from memory to obtain the full instruction
-	bytes = regSize / ((int)sizeof(char));
+	// load first address of memory
+	PC = &memory;
 
 	// move the address that is currently being read into MAR register
 	MAR = PC;
 
 	//Move memory contents at MAR into MBR
-	for (i = 0; i < bytes; i++) {
-		MBR = MBR << bytes; //???
-		MBR += *((unsigned char*)memory + (MAR + i));
-	}
-
+	MBR = *((unsigned char*)memory + MAR);
+	
 	//Move MBR into the Instruction Registers
 	IR = MBR;
-	IR0 = IR >> 0x10;		// IR0 holds instruction
-	IR1 = IR & 0x000FFFF;	// IR1 holds operand
+	IR0 = IR & 0x00FF;	// IR0 holds instruction
+	IR1 = IR & 0xFF00;	// IR1 holds operand
 
 	// Increment programming counter into next position
-	PC += regSize; 
+	PC++; 
 }
 
 /*

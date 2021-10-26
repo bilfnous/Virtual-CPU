@@ -199,7 +199,7 @@ void MemMod(void* memory, unsigned offset) {
 		else {
 			sscanf(value, "%x", &value);
 			printf("New value is: %c\n\n", value[0]);
-			*(((unsigned char*)memory)+ offset) = value[0]; // doesn't store cprect value ??
+			*(((unsigned char*)memory)+ offset) = value[0];
 			printf("Memory content:\t(%c)\n\n", ((unsigned char*)memory)[offset]);
 			offset++;
 		}
