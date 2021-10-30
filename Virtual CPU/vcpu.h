@@ -78,38 +78,32 @@ int32_t REG[REG_NUM];			// Registers Array
 
 // Instructions
 /* Check if instruction fetched is equal to one of the predefined instructions. */
-#define LOAD_STORE	0x1 & (IR >> 0x18) // Shift 3 bytes to the right (check last eight bits against the instruciton)
-#define DATA_PROC	0x2 & (IR >> 0x18)
-#define CON_BRANCH	0x3 & (IR >> 0x18)
-#define UN_BRANCH	0x4 & (IR >> 0x18)
-#define STOP_I		0x0 & IR
+#define LOAD_STORE	0x10	
+#define HALFWORD	0x01
+#define WORD		0x02
 
-#define LOAD		0x1 & (IR >> 0x10) // Shift 2 bytes to the right
-#define STORE		0x2 & (IR >> 0x10)
-#define HALFWORD	0x1 & (IR >> 0x8) // Shift 1 bytes to the right
-#define WORD		0x2 & (IR >> 0x8)
+#define DATA_PROC	0x30
+#define CON_BRANCH	0x40
+#define UN_BRANCH	0x50
+#define STOP_I		0x00
 
 // Data processing instructions
-#define AND 0x0 & (IR >> 0x10) // Logical bit-wise AND Rd := Rn AND Op2
-#define OR	0xC & (IR >> 0x10) // Logical bit-wise OR Rd := Rn OR Op2
-#define	EOR 0x1 & (IR >> 0x10) // Logical bit-wise exclusive OR Rd := Rn EOR Op2
-#define SUB 0x2 & (IR >> 0x10) // Subtract Rd := Rn -Op2
-#define ADD 0x4 & (IR >> 0x10) // Add Rd := Rn + Op2
-#define ADC 0x5 & (IR >> 0x10) // Add with carry Rd := Rn + Op2 + C
-#define SBC 0x6 & (IR >> 0x10) // Subtract with carry Rd := Rn -Op2 + C -1
-#define MOV 0xD & (IR >> 0x10) // Move Rd := Op2
+#define AND 0x31  // Logical bit-wise AND Rd := Rn AND Op2
+#define OR	0x32  // Logical bit-wise OR Rd := Rn OR Op2
+#define	EOR 0x33  // Logical bit-wise exclusive OR Rd := Rn EOR Op2
+#define SUB 0x34  // Subtract Rd := Rn -Op2
+#define ADD 0x35  // Add Rd := Rn + Op2
+#define ADC 0x36  // Add with carry Rd := Rn + Op2 + C
+#define SBC 0x37  // Subtract with carry Rd := Rn -Op2 + C -1
+#define MOV 0x38  // Move Rd := Op2
 
 // Condition Branch Codes
-#define EQ 0x0 & (IR >> 0x10) // equal - zero flag set
-#define NE 0x1 & (IR >> 0x10) // not equal - zero flag clear
-#define CS 0x2 & (IR >> 0x10) // unsigned higher or same - carry flag set
-#define CC 0x3 & (IR >> 0x10) // unsigned lower - carry flag clear
-#define MI 0x4 & (IR >> 0x10) // negative - negative flag set
-#define PL 0x5 & (IR >> 0x10) // positive or zero - negative flag clear
-#define HI 0x8 & (IR >> 0x10) // unsigned higher - C set and Z clear
-#define LS 0x9 & (IR >> 0x10) // unsigned lower or same - C clear or Z set
-#define AL 0xE & (IR >> 0x10) // always - ignore flags
-
+#define EQ 0x41  // equal - zero flag set
+#define NE 0x42  // not equal - zero flag clear
+#define GT 0x43  
+#define LT 0x44  
+#define GE 0x45  
+#define LE 0x46  
 
 // Functions Prototypes 
 void help();
@@ -120,7 +114,7 @@ void MemDump(void* memory, unsigned offset, unsigned length);
 void MemMod(void* memory, unsigned address);
 int iscarry(unsigned long op1, unsigned long op2, unsigned C);
 void reset();
-void execute();
+void execute(void* memory);
 void cycle(void* memory);
 void fetch(void* memory);
 void displayRegs();
