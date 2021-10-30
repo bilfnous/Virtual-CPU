@@ -51,8 +51,8 @@ void fetch(void* memory) {
 	
 	//Move MBR into the Instruction Registers
 	IR = MBR;
-	IR0 = IR & 0x00FF;	// IR0 holds instruction
-	IR1 = IR & 0xFF00;	// IR1 holds operand
+	IR0 = (IR >> 0x10) & 0x00FF;			// IR0 holds instruction
+	IR1 = IR & 0x00FF;						// IR1 holds operand
 
 	// Increment programming counter into next position
 	PC++; 
@@ -65,7 +65,7 @@ void fetch(void* memory) {
 void cycle(void* memory) {
 	while(STOP_F == false) {
 		fetch(&memory);
-		execute();
+		execute(&memory);
 	}
 }
 
@@ -73,33 +73,62 @@ void cycle(void* memory) {
 * Receives current instruciton and its type to be executed.
 * REGs will be changed depending on the command passed by "cycle()".
 */
-void execute() {
-	if (LOAD_STORE) {
-		if (LOAD) {
-			if (HALFWORD) {
-			}
-			else if (WORD) {
-			}
-		
+void execute(void* memory) {
+	if (LOAD_STORE & (IR0 & 0x00F0)) {
+		if (HALFWORD & (IR0 & 0x000F)) {
+			RN = *((unsigned char*)memory + PC);
+			PC++;
+			RD = RN;
 		}
-		else if (STORE) {
-			if (HALFWORD) {
-			}
-			else if (WORD) {
-			}
+		else if (WORD & (IR0 & 0x000F)) {
+			RN = *((unsigned char*)memory + PC);
+			PC++;
+			RD = 0x000F & RN;
+			RN = *((unsigned char*)memory + PC);
+			PC++;
+			RD = RD + (0x00F0 & RN);
 		}
-
 	}
-	else if (DATA_PROC) {
+	
+	else if (DATA_PROC & (IR0 & 0x000F)) {
+		if (ADD) {
+			RD += IR1;
+		}
+		else if (ADC) {
+			RD = iscarry(RD, IR0, 1);
+		}
+		else if (SUB) {
+			RD -= IR1;
+		}
+		else if (SBC) {
+		}
 	
 	}
-	else if (CON_BRANCH) {
+	else if (CON_BRANCH & (IR0 & 0x000F)) {
+		if (EQ) {
+			RD = (RD == IR1) ? RD : 0;
+		}
+		else if (NE) {
+			RD = (RD != IR1) ? RD : 0;
+		}
+		else if (GT) {
+			RD = (RD < IR1) ? RD : 0;
+		}
+		else if (LT) {
+			RD = (RD > IR1) ? RD : 0;
+		}
+		else if (GE) {
+			RD = (RD <= IR1) ? RD : 0;
+		}
+		else if (LE) {
+			RD = (RD >= IR1) ? RD : 0;
+		}
 	
 	}
-	else if (UN_BRANCH) {
+	else if (UN_BRANCH & (IR0 & 0x000F)) {
 	
 	}
-	else if (STOP_I) {
+	else if (STOP_I & IR0) {
 		printf("\n\n*** End Of Program ***\n\n");
 		STOP_F = true;
 	}
